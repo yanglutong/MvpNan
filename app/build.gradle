@@ -1,0 +1,76 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 30   //运行的版本
+    buildToolsVersion "30.0.1"  //工具版本
+
+    defaultConfig {
+        applicationId "com.sm.example"  //ID
+        minSdkVersion 16 //运行的最低版本要求
+        targetSdkVersion 30//兼容版本
+        versionCode 1//app版本
+        versionName "1.0"//app 版本的名字
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+/* 3.0打包生成APK名称 */
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def apkName = "com.sm.example"                // apk name（需要更换成自己的App Name）
+            def environment = variant.name        // release or debug
+            def vCode = variant.versionCode        // version code
+            def vName = variant.versionName        // version name
+            def createTime = new Date().format("YYYY-MM-dd-HH-mm", TimeZone.getTimeZone("GMT+08:00"))
+            // create time
+            outputFileName = "${apkName}_v${vName}_${vCode}-${environment}_${createTime}.apk"
+            // apk name with path
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8   //java 版本
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    //noinspection GradleDynamicVersion
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //    implementation 'com.blankj:utilcode:1.22.10'//工具类
+    implementation 'me.jessyan:autosize:1.1.2'//今日头条适配
+    //noinspection GradleCompatible
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.j256.ormlite:ormlite-android:5.0'//数据库 ormlite
+    implementation 'com.mylhyl:circleDialog:2.6.3'
+//    implementation project(':recyclerview')
+//    implementation project(':library')
+//    implementation project(':ExcelLib')
+    implementation files('libs/jxl.jar')
+    implementation 'com.uniquestudio:checkbox:1.0.10'
+//    implementation "androidx.versionedparcelable:versionedparcelable:1.1.0"
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+//    implementation 'com.blankj:utilcode:1.22.10'
+    implementation 'com.blankj:utilcode:1.25.9'//工具类
+//    implementation 'com.blankj:utilcodex:1.28.6'
+    implementation 'com.lzy.widget:view-core:0.1.5'
+    implementation 'com.github.codbking:PickTime:v1.0.0'
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+}
